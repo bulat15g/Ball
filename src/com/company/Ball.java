@@ -17,9 +17,8 @@ public class Ball {
     private double clashRadius=8;
     private double xCoord, yCoord;
     private double xSpeed, ySpeed;
-    private int radius=7;double criticalFaultRadius=2;
-    Boolean isMain =false;
-    int mass =0;
+    private int radius=7;
+
 
     Ball(double xCoord, double yCoord, double xSpeed, double ySpeed){
         this.xCoord = xCoord;this.yCoord = yCoord;
@@ -34,9 +33,10 @@ public class Ball {
             this.ySpeed = ySpeed * frequencyfactor;
         }
     }
-    Ball(double xCoord, double yCoord){
+    Ball(double xCoord, double yCoord,boolean rand){
         this.xCoord = xCoord;this.yCoord = yCoord;this.xSpeed = 0.0;this.ySpeed = 0.0;
     }
+
     public Ball() {
     }
     public double getxBallcenter(){
@@ -127,8 +127,6 @@ public class Ball {
     //взаимодействие и движение шара с разными столами
     //RECT
     public Boolean Bound_Rect(Field field){
-
-        // TODO: 11.05.17 начать с 0
         Boolean xBound=(getxBallcenter()<field.xcoord+clashRadius||
                 getxBallcenter()>field.xcoord+field.width-clashRadius);
         Boolean yBound=((getyBallcenter()<field.ycoord+clashRadius)||

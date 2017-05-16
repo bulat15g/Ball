@@ -12,7 +12,7 @@ import java.text.AttributedCharacterIterator;
  */
 public class MainContent extends JComponent {
     public static int ball_Frequency=10;
-    private Field field=new Field(30,30,350,500);
+    public Field field=new Field(30,30,350,500);
     public Ball ball=new Ball(150,80,1,3);
 
     //oval+rect
@@ -25,7 +25,7 @@ public class MainContent extends JComponent {
     });
 
 
-    // TODO: 07.05.17 normal move
+    // TODO: 07.05.17 ????
     Timer moveTimer =new Timer(ball_Frequency, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -41,7 +41,6 @@ public class MainContent extends JComponent {
         repaintTimer.start();
         moveTimer.start();
     }
-
 
 
     // TODO: 07.05.17 add normal resizable
