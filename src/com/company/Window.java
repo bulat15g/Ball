@@ -11,13 +11,14 @@ import java.awt.event.*;
 public class Window extends JFrame {
     public static int BoundX = 500, BoundY = 600;
     public static Double updateTime[];
+    public static long clashnumber;
 
     JPanel upInfoPanel;
     JPanel centerPanel;
     JTextComponent infoTextField;
     static JTextComponent infoRunTimeField;
     static JTextComponent infoAllTimeField;
-//    static JComboBox myCombobox;
+    static JTextComponent clashCount;
 
     static MainContent mainContent = new MainContent();
     static Timer infoUpdateTimer;
@@ -58,12 +59,16 @@ public class Window extends JFrame {
         infoAllTimeField = new JTextField("                                ");
         infoAllTimeField.setEditable(false);
         infoAllTimeField.setFocusable(false);
+        clashCount = new JTextField("                           ");
+        clashCount.setEditable(false);
+        clashCount.setFocusable(false);
 
 
         upInfoPanel.setLayout(new FlowLayout());
         upInfoPanel.add(infoTextField);
         upInfoPanel.add(centerPanel);
         upInfoPanel.add(infoRunTimeField);
+        upInfoPanel.add(clashCount);
 
         centerPanel.add(infoAllTimeField);
 
@@ -84,6 +89,7 @@ public class Window extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 infoRunTimeField.setText("Время работы:" + updateTime[1].toString());
                 infoAllTimeField.setText("Время работы:" + updateTime[0].toString());
+                clashCount.setText("Ударов:"+clashnumber);
 
                 updateTime[0] += 0.5;
                 if (mainContent.moveTimer.isRunning()) {
@@ -92,11 +98,6 @@ public class Window extends JFrame {
             }
         });
     }
-//
-//    void initiateMyCombobox(){
-//
-//    }
-
 
     /**
      * my Custom key listener
@@ -115,7 +116,7 @@ public class Window extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            System.out.println(e.getExtendedKeyCode());
+//            System.out.println(e.getExtendedKeyCode());
             if (e.getExtendedKeyCode() == 27)
                 System.exit(0);
             if (e.getExtendedKeyCode() == 32) {
@@ -164,8 +165,6 @@ public class Window extends JFrame {
         public void componentResized(ComponentEvent e) {
             Rectangle rectangle=new Rectangle();
             rectangle=e.getComponent().getBounds();
-            mainContent.field.width=(rectangle.width)-30-50;
-            mainContent.field.height=(rectangle.height)-30-70;
 
 
         }

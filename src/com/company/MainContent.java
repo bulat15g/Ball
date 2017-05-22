@@ -7,13 +7,14 @@ import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
+import static java.lang.Math.sqrt;
+
 /**
  * Created by mctf on 06.05.17.
  */
 public class MainContent extends JComponent {
     public static int ball_Frequency=10;
-    public Field field=new Field(30,30,350,500);
-    public Ball ball=new Ball(150,80,1,3);
+    public MoveObjects moveObjects = new MoveObjects();
 
     //oval+rect
     //repaint timer every 10 MS
@@ -24,12 +25,24 @@ public class MainContent extends JComponent {
         }
     });
 
+    /**
+     * setMoveObjects
+     */
+    public void setMoveObjects(){
+        moveObjects.addObject(new Field(30,30,350,500));
+        moveObjects.addObject(new Ball(100,80,0,1));
+        moveObjects.addObject(new Ball(105,300 ,0,-1));
+        for (int i = 0; i < 100; i++) {
+            moveObjects.addObject(new Ball(true));
+        }
+        moveObjects.clearUselessObjects();
+    }
 
     // TODO: 07.05.17 ????
     Timer moveTimer =new Timer(ball_Frequency, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ball.Bound_Rect(field);
+            moveObjects.moveTimer();
         }
     });
 
@@ -40,13 +53,13 @@ public class MainContent extends JComponent {
     MainContent(){
         repaintTimer.start();
         moveTimer.start();
+        setMoveObjects();
     }
 
 
     // TODO: 07.05.17 add normal resizable
     public void paint (Graphics G){
-        field.Paintthis(G);
-        ball.Paintthis(G);
+        moveObjects.paintObjects(G);
     }
 
 }

@@ -7,7 +7,6 @@ import java.awt.*;
  */
 public class Field {
     public int xcoord, ycoord, width, height;
-
     public Field(int xcoord, int ycoord, int width, int height) {
         this.xcoord = xcoord;
         this.ycoord = ycoord;
@@ -27,7 +26,6 @@ public class Field {
     public int getHeight() {
         return height;
     }
-
 
     public void Paintthis(Graphics g){
         g.drawRect(xcoord, ycoord, width, height);
