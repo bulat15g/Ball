@@ -20,10 +20,10 @@ public class MoveObjects {
 
     public void clearUselessObjects(){
         for (int i = 0; i < ballArrayList.size(); i++) {
-            Boolean xBound=(ballArrayList.get(i).getxBallcenter()<field.xcoord||
-                    ballArrayList.get(i).getxBallcenter()>field.xcoord+field.width+1.2*ballArrayList.get(i).clashRadius);
+            Boolean xBound=(ballArrayList.get(i).getxBallcenter()<field.xcoord+2||
+                    ballArrayList.get(i).getxBallcenter()>field.xcoord+field.width+1*ballArrayList.get(i).clashRadius);
             Boolean yBound=((ballArrayList.get(i).getyBallcenter()<field.ycoord)||
-                    (ballArrayList.get(i).getyBallcenter()>field.height +field.ycoord +1.2*ballArrayList.get(i).clashRadius));
+                    (ballArrayList.get(i).getyBallcenter()>field.height +field.ycoord +1*ballArrayList.get(i).clashRadius));
             if(yBound||xBound){
                 ballArrayList.remove(i);
             }

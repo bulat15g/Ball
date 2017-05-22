@@ -41,7 +41,7 @@ public class Ball {
             xCoord=rand.nextDouble()*300;
             yCoord=rand.nextDouble()*500;
             xSpeed=rand.nextDouble()*3;
-            ySpeed=rand.nextDouble()*2.5;
+            ySpeed=rand.nextDouble()*3;
 
         }
     }
@@ -102,7 +102,6 @@ public class Ball {
         if(sqrt( ((getxBallcenter())-ball.getxBallcenter())*( (getxBallcenter())-ball.getxBallcenter())+
                 ( (getyBallcenter())-ball.getyBallcenter())*( (getyBallcenter())-ball.getyBallcenter()))
                 <=radius+ball.radius){
-
 
             //полные вектора скоростей + нормаль
             Vector Xf=new Vector(xSpeed,ySpeed,"Xvector");
