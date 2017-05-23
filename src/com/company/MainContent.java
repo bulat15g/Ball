@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
+import static java.lang.Integer.parseInt;
 import static java.lang.Math.sqrt;
 
 /**
@@ -15,9 +16,9 @@ import static java.lang.Math.sqrt;
 public class MainContent extends JComponent {
     public static int ball_Frequency=10;
     public MoveObjects moveObjects = new MoveObjects();
+    public static Integer countRandomBalls;
 
 
-    //oval+rect
     //repaint timer every 10 MS
     Timer repaintTimer =new Timer(10, new ActionListener() {
         @Override
@@ -33,9 +34,9 @@ public class MainContent extends JComponent {
         moveObjects.addObject(new Field(30,30,350,500));
         moveObjects.addObject(new Ball(100,80,0,1));
         moveObjects.getBall(0).setBallColor(Color.GREEN);
+        moveObjects.addObject(new Ball(100,180,0,0));
 
-        moveObjects.addObject(new Ball(105,300 ,0,-1));
-        for (int i = 0; i < 150; i++) {
+        for (int i = 0; i < countRandomBalls; i++) {
             moveObjects.addObject(new Ball(true));
         }
         moveObjects.clearUselessObjects();
@@ -54,6 +55,8 @@ public class MainContent extends JComponent {
      * initiate repaint&move
      */
     MainContent(){
+
+        countRandomBalls=Integer.parseInt(JOptionPane.showInputDialog("ВВедите колво шаров"));
         repaintTimer.start();
         moveTimer.start();
         setMoveObjects();

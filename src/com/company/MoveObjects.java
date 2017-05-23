@@ -19,6 +19,7 @@ public class MoveObjects {
         field=new Field(0,0,0,0);
     }
 
+    //очищает шары вне столы
     public void clearUselessObjects(){
         for (int i = 0; i < ballArrayList.size(); i++) {
             Boolean xBound=(ballArrayList.get(i).getxBallcenter()<field.xcoord+2||
@@ -31,6 +32,7 @@ public class MoveObjects {
         }
     }
 
+    //добавление объекта
     public void addObject(Object object){
         if(object instanceof Ball){
             ballArrayList.add((Ball) object);
@@ -40,6 +42,7 @@ public class MoveObjects {
         }
     }
 
+    //действие,выполняющееся каждую минуту
     public void moveTimer(){
 
         int count=ballArrayList.size();
@@ -56,6 +59,7 @@ public class MoveObjects {
         }
     }
 
+    //рисовка
     public void paintObjects(Graphics G){
         for (int i = 0; i < ballArrayList.size(); i++) {
             ballArrayList.get(i).Paintthis(G);
@@ -63,6 +67,7 @@ public class MoveObjects {
         field.Paintthis(G);
     }
 
+    //получение шара
     public Ball getBall(int i) {
         return ballArrayList.get(i);
     }

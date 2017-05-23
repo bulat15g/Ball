@@ -36,7 +36,7 @@ public class Ball {
     Ball(double xCoord, double yCoord){
         this.xCoord = xCoord;this.yCoord = yCoord;this.xSpeed = 0.0;this.ySpeed = 0.0;
     }
-    Ball(boolean random){
+    Ball(Boolean random){
         if (random){
             Random rand=new Random();
             xCoord=rand.nextDouble()*300;
@@ -46,9 +46,33 @@ public class Ball {
 
         }
     }
-
     public Ball() {
     }
+
+    /**
+     * 1
+     * 2- border
+     * 3- cloth
+     * @param command
+     */
+    public void decreaseSpeed(int command){
+        switch (command) {
+            case 1:
+                break;
+            case 2:
+                xSpeed*=0.98;
+                break;
+            case 3:
+                ySpeed=ySpeed*0.99;
+                break;
+        }
+
+    }
+    public void decreaseSpeed(Double energy){
+        energy*=0.8;
+    }
+
+
     public double getxBallcenter(){
         return xCoord+radius;
     }
@@ -56,18 +80,18 @@ public class Ball {
         return yCoord+radius;
     }
 
+
+    //позволяет выбрать цвет шара
     public void setBallColor(Color ballColor) {
         this.ballColor = ballColor;
     }
 
-    //взаимодействие и движение шара с разными столами
-    //овал
+    //взаимодействие и движение шара с разными столами- ОВАЛ
     public Boolean Bound_oval(Field field){
         return null;
     }
 
-    //взаимодействие и движение шара с разными столами
-    //RECT
+    //взаимодействие и движение шара с разными столами-прямоугольник
     public Boolean Bound_Rect(Field field){
 
         Boolean xBound=(getxBallcenter()<field.xcoord+clashRadius||
@@ -81,7 +105,6 @@ public class Ball {
         }
 
         if(xBound&&yBound){
-//            System.out.println("IM HERE");
             xSpeed=-xSpeed;ySpeed=-ySpeed;
             xCoord+=xSpeed;yCoord+=ySpeed;
             return false;
@@ -100,7 +123,11 @@ public class Ball {
         return true;
     }
 
-    //обработка соударения 2х шаров
+    /**
+     * обработка соударения 2х шаров
+     * основная идея- переход к полярным координатам и разделение скоростей на нормальную и тангенциальную
+     * далее-интуиция
+     */
     public Boolean ClashWithBall(Ball ball){
         if(abs(xCoord-ball.xCoord)<radius+ball.radius+1)
             if (abs(yCoord-ball.yCoord)<radius+ball.radius+1)
@@ -108,7 +135,7 @@ public class Ball {
                 ( (getyBallcenter())-ball.getyBallcenter())*( (getyBallcenter())-ball.getyBallcenter()))
                 <=radius+ball.radius){
 
-            //полные вектора скоростей + нормаль
+//            полные вектора скоростей + нормаль
             Vector Xf=new Vector(xSpeed,ySpeed,"Xvector");
             Vector Yf=new Vector(ball.xSpeed,ball.ySpeed,"yVector");
             Vector L= new Vector(
@@ -120,20 +147,18 @@ public class Ball {
             //определение тангенциальной и нормальной скоростей X
             Vector Xr=L.getMultiplicateNumber(Xf.scalar(L));
             Vector Xt=Xf.summ(Xr.getMultiplicateNumber(-1));
-            //определение тангенциальной и нормальной скоростей Y
+//            определение тангенциальной и нормальной скоростей Y
             Vector Yr=L.getMultiplicateNumber(Yf.scalar(L));
             Vector Yt=Yf.summ(Yr.getMultiplicateNumber(-1));
             //x=(m1 Imnpul - sqrt(m1 m2 (-Imnpul^2 + 2 m1 Energ + 2 m2 Energ)))/(m1 (m1 + m2))         !!!!!!!!!!!!!!!!!!!!!!!
             //y=(m2 Imnpul - sqrt(m1 m2 (-Imnpul^2 + 2 m1 Energ + 2 m2 Energ)))/(m2 (m1 + m2))         !!!!!!!!!!!!!!!!!!!!!!!!!!!
             Double Energ=mass*Xr.lenght()*Xr.lenght()/2+ball.mass*Yr.lenght()*Yr.lenght()/2;
 
-            //затухание скорости нормальной при ударе
-            Random random=new Random();
-            Energ*=1-(random.nextDouble())*(random.nextDouble())*(random.nextDouble())*(random.nextDouble());
+            decreaseSpeed(Energ);
 
             Double Impul=mass*Xr.lenght()-ball.mass*Yr.lenght();
 
-//            System.out.println(Xf.scalar(L)+"   "+Yf.scalar(L));
+            System.out.println(Xf.scalar(L)+"   "+Yf.scalar(L));
 
             Double x=(mass* Impul - sqrt(mass*ball.mass*(-Impul*Impul + 2* mass* Energ + 2* ball.mass*Energ)))/(mass *(mass + ball.mass));
             Double y=(ball.mass* Impul - sqrt(mass*ball.mass*(-Impul*Impul + 2* mass* Energ + 2* ball.mass*Energ)))/(ball.mass *(mass + ball.mass));
@@ -141,7 +166,7 @@ public class Ball {
                 y=(+ball.mass* Impul - sqrt(mass*ball.mass*(-Impul*Impul + 2* mass* Energ + 2* ball.mass*Energ)))/(ball.mass *(mass + ball.mass));
                 x=(-mass* Impul + sqrt(mass*ball.mass*(-Impul*Impul + 2* mass* Energ + 2* ball.mass*Energ)))/(mass *(mass + ball.mass));
             }
-//            System.out.println(x+"   "+y);
+            System.out.println(x+"   "+y);
 
             Xr=L.getMultiplicateNumber(x);
             Yr=L.getMultiplicateNumber(y);
@@ -161,6 +186,10 @@ public class Ball {
 
     //painting
     public void Paintthis(Graphics g){
+        if(ballColor==Color.BLACK){
+            g.fillOval((int)xCoord,(int)yCoord,radius*2,radius*2);
+            return;
+        }
         Color buff=g.getColor();
         g.setColor(ballColor);
         g.fillOval((int)xCoord,(int)yCoord,radius*2,radius*2);
