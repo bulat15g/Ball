@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class MoveObjects {
     ArrayList<Ball> ballArrayList;
     Field field;
+    Cue cue=new Cue();
 
     /**
      * constructor
@@ -60,5 +61,9 @@ public class MoveObjects {
             ballArrayList.get(i).Paintthis(G);
         }
         field.Paintthis(G);
+    }
+
+    public Ball getBall(int i) {
+        return ballArrayList.get(i);
     }
 }

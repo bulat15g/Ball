@@ -16,6 +16,7 @@ public class MainContent extends JComponent {
     public static int ball_Frequency=10;
     public MoveObjects moveObjects = new MoveObjects();
 
+
     //oval+rect
     //repaint timer every 10 MS
     Timer repaintTimer =new Timer(10, new ActionListener() {
@@ -31,8 +32,10 @@ public class MainContent extends JComponent {
     public void setMoveObjects(){
         moveObjects.addObject(new Field(30,30,350,500));
         moveObjects.addObject(new Ball(100,80,0,1));
+        moveObjects.getBall(0).setBallColor(Color.GREEN);
+
         moveObjects.addObject(new Ball(105,300 ,0,-1));
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 150; i++) {
             moveObjects.addObject(new Ball(true));
         }
         moveObjects.clearUselessObjects();

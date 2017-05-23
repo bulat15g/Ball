@@ -18,6 +18,7 @@ public class Ball {
     private double xSpeed, ySpeed;
     private int radius=7;
     public double mass=1;
+    public Color ballColor=Color.BLACK;
 
     Ball(double xCoord, double yCoord, double xSpeed, double ySpeed){
         this.xCoord = xCoord;this.yCoord = yCoord;
@@ -32,7 +33,7 @@ public class Ball {
             this.ySpeed = ySpeed * frequencyfactor;
         }
     }
-    Ball(double xCoord, double yCoord,boolean rand){
+    Ball(double xCoord, double yCoord){
         this.xCoord = xCoord;this.yCoord = yCoord;this.xSpeed = 0.0;this.ySpeed = 0.0;
     }
     Ball(boolean random){
@@ -40,8 +41,8 @@ public class Ball {
             Random rand=new Random();
             xCoord=rand.nextDouble()*300;
             yCoord=rand.nextDouble()*500;
-            xSpeed=rand.nextDouble()*3;
-            ySpeed=rand.nextDouble()*3;
+            xSpeed=rand.nextDouble()*2;
+            ySpeed=rand.nextDouble()*2;
 
         }
     }
@@ -55,6 +56,9 @@ public class Ball {
         return yCoord+radius;
     }
 
+    public void setBallColor(Color ballColor) {
+        this.ballColor = ballColor;
+    }
 
     //взаимодействие и движение шара с разными столами
     //овал
@@ -65,6 +69,7 @@ public class Ball {
     //взаимодействие и движение шара с разными столами
     //RECT
     public Boolean Bound_Rect(Field field){
+
         Boolean xBound=(getxBallcenter()<field.xcoord+clashRadius||
                 getxBallcenter()>field.xcoord+field.width-clashRadius);
         Boolean yBound=((getyBallcenter()<field.ycoord+clashRadius)||
@@ -97,8 +102,8 @@ public class Ball {
 
     //обработка соударения 2х шаров
     public Boolean ClashWithBall(Ball ball){
-        if(abs(xCoord-ball.xCoord)<radius+ball.radius+3)
-            if (abs(yCoord-ball.yCoord)<radius+ball.radius+3)
+        if(abs(xCoord-ball.xCoord)<radius+ball.radius+1)
+            if (abs(yCoord-ball.yCoord)<radius+ball.radius+1)
         if(sqrt( ((getxBallcenter())-ball.getxBallcenter())*( (getxBallcenter())-ball.getxBallcenter())+
                 ( (getyBallcenter())-ball.getyBallcenter())*( (getyBallcenter())-ball.getyBallcenter()))
                 <=radius+ball.radius){
@@ -120,7 +125,12 @@ public class Ball {
             Vector Yt=Yf.summ(Yr.getMultiplicateNumber(-1));
             //x=(m1 Imnpul - sqrt(m1 m2 (-Imnpul^2 + 2 m1 Energ + 2 m2 Energ)))/(m1 (m1 + m2))         !!!!!!!!!!!!!!!!!!!!!!!
             //y=(m2 Imnpul - sqrt(m1 m2 (-Imnpul^2 + 2 m1 Energ + 2 m2 Energ)))/(m2 (m1 + m2))         !!!!!!!!!!!!!!!!!!!!!!!!!!!
-            Double Energ=mass*Xr.lenght()*Xr.lenght()+ball.mass*Yr.lenght()*Yr.lenght();
+            Double Energ=mass*Xr.lenght()*Xr.lenght()/2+ball.mass*Yr.lenght()*Yr.lenght()/2;
+
+            //затухание скорости нормальной при ударе
+            Random random=new Random();
+            Energ*=1-(random.nextDouble())*(random.nextDouble())*(random.nextDouble())*(random.nextDouble());
+
             Double Impul=mass*Xr.lenght()-ball.mass*Yr.lenght();
 
 //            System.out.println(Xf.scalar(L)+"   "+Yf.scalar(L));
@@ -133,8 +143,8 @@ public class Ball {
             }
 //            System.out.println(x+"   "+y);
 
-            Xr=L.getMultiplicateNumber(x/sqrt(2));
-            Yr=L.getMultiplicateNumber(y/sqrt(2));
+            Xr=L.getMultiplicateNumber(x);
+            Yr=L.getMultiplicateNumber(y);
             Xf=Xr.summ(Xt);
             Yf=Yr.summ(Yt);
 
@@ -151,7 +161,10 @@ public class Ball {
 
     //painting
     public void Paintthis(Graphics g){
+        Color buff=g.getColor();
+        g.setColor(ballColor);
         g.fillOval((int)xCoord,(int)yCoord,radius*2,radius*2);
+        g.setColor(buff);
     }
 
 }
