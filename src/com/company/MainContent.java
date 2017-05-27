@@ -8,6 +8,7 @@ import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.Math.random;
 import static java.lang.Math.sqrt;
 
 /**
@@ -32,17 +33,30 @@ public class MainContent extends JComponent {
      */
     public void setMoveObjects(){
         moveObjects.addObject(new Field(30,30,350,500));
-        moveObjects.addObject(new Ball(100,80,0,1));
-        moveObjects.getBall(0).setBallColor(Color.GREEN);
-        moveObjects.addObject(new Ball(100,180,0,0));
+        Dimension fieldCenter=moveObjects.getCenter();
 
-        for (int i = 0; i < countRandomBalls; i++) {
-            moveObjects.addObject(new Ball(true));
+        moveObjects.addObject(new Ball(fieldCenter.getWidth(),fieldCenter.getHeight()+60,0,-1));
+        moveObjects.getBall(0).setBallColor(Color.GREEN);
+
+        for (int i = 3; i >= 1; i--) {
+            int rad=11;
+            for (int j = 0; j < 1+i*2; j++) {
+                if (j==0){
+                    moveObjects.addObject(new Ball(fieldCenter.getWidth(),fieldCenter.getHeight()-80-i*rad));
+                    continue;
+                }
+                moveObjects.addObject(new Ball(
+                        fieldCenter.getWidth()-j*rad-2*random(),
+                        fieldCenter.getHeight()-80-(3-i)*rad-j*rad));
+                moveObjects.addObject(new Ball(
+                        fieldCenter.getWidth()+j*rad,
+                        fieldCenter.getHeight()-80-(3-i)*rad-j*rad));
+            }
         }
+
         moveObjects.clearUselessObjects();
     }
 
-    // TODO: 07.05.17 ????
     Timer moveTimer =new Timer(ball_Frequency, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -55,15 +69,12 @@ public class MainContent extends JComponent {
      * initiate repaint&move
      */
     MainContent(){
-
-        countRandomBalls=Integer.parseInt(JOptionPane.showInputDialog("ВВедите колво шаров"));
         repaintTimer.start();
         moveTimer.start();
         setMoveObjects();
     }
 
 
-    // TODO: 07.05.17 add normal resizable
     public void paint (Graphics G){
         moveObjects.paintObjects(G);
     }

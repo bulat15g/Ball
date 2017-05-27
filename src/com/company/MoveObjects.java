@@ -22,9 +22,9 @@ public class MoveObjects {
     //очищает шары вне столы
     public void clearUselessObjects(){
         for (int i = 0; i < ballArrayList.size(); i++) {
-            Boolean xBound=(ballArrayList.get(i).getxBallcenter()<field.xcoord+2||
+            boolean xBound=(ballArrayList.get(i).getxBallcenter()<field.xcoord||
                     ballArrayList.get(i).getxBallcenter()>field.xcoord+field.width+1*ballArrayList.get(i).clashRadius);
-            Boolean yBound=((ballArrayList.get(i).getyBallcenter()<field.ycoord)||
+            boolean yBound=((ballArrayList.get(i).getyBallcenter()<field.ycoord)||
                     (ballArrayList.get(i).getyBallcenter()>field.height +field.ycoord +1*ballArrayList.get(i).clashRadius));
             if(yBound||xBound){
                 ballArrayList.remove(i);
@@ -65,6 +65,11 @@ public class MoveObjects {
             ballArrayList.get(i).Paintthis(G);
         }
         field.Paintthis(G);
+    }
+
+    //get Center
+    public Dimension getCenter(){
+        return new Dimension(field.getXCenter(),field.getYCenter());
     }
 
     //получение шара
