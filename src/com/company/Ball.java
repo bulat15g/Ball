@@ -60,7 +60,7 @@ public class Ball {
             case 1:
                 break;
             case 2:
-                xSpeed*=0.98;
+                xSpeed*=0.99;
                 break;
             case 3:
                 ySpeed=ySpeed*0.99;
@@ -69,7 +69,7 @@ public class Ball {
 
     }
     public void decreaseSpeed(Double energy){
-        energy*=1.8;
+        energy*=0.7;
     }
 
 
@@ -93,6 +93,8 @@ public class Ball {
 
     //взаимодействие и движение шара с разными столами-прямоугольник
     public boolean Bound_Rect(Field field){
+        xSpeed*=0.999;
+        ySpeed*=0.999;
 
         boolean xBound=(getxBallcenter()<field.xcoord+clashRadius||
                 getxBallcenter()>field.xcoord+field.width-clashRadius);
