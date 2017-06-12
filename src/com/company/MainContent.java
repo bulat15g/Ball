@@ -17,8 +17,6 @@ import static java.lang.Math.sqrt;
 public class MainContent extends JComponent {
     public static int ball_Frequency=10;
     public MoveObjects moveObjects = new MoveObjects();
-    public static Integer countRandomBalls;
-
 
     //repaint timer every 10 MS
     Timer repaintTimer =new Timer(10, new ActionListener() {
@@ -65,7 +63,6 @@ public class MainContent extends JComponent {
         }
     });
 
-
     /**
      * initiate repaint&move
      */
@@ -76,7 +73,7 @@ public class MainContent extends JComponent {
     }
 
 
-    public void paint (Graphics G){
+    public void paint (Graphics G ) {
         moveObjects.paintObjects(G);
     }
 

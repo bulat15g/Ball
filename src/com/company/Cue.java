@@ -13,7 +13,7 @@ public class Cue {
     public double phi=270;
     public Boolean cueIsNesessary=false;
     int cueRect[][];
-    double deltaPhi=7,rad=10;
+    double deltaPhi=7, rad=10;
     double powerShot=4;
 
     Cue(Ball ball){

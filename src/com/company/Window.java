@@ -10,19 +10,17 @@ import java.awt.event.*;
  */
 public class Window extends JFrame {
     public static int BoundX = 500, BoundY = 600;
+
     public static Double updateTime[];
     public static long clashnumber;
-
-
-    JPanel upInfoPanel;
-    JPanel centerPanel;
-    JTextComponent infoTextField;
     static JTextComponent infoRunTimeField;
     static JTextComponent infoAllTimeField;
     static JTextComponent clashCount;
-
     static MainContent mainContent = new MainContent();
     static Timer infoUpdateTimer;
+    JPanel upInfoPanel;
+    JPanel centerPanel;
+    JTextComponent infoTextField;
 
 
     /**
@@ -91,7 +89,7 @@ public class Window extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 infoRunTimeField.setText("Время работы:" + updateTime[1].toString());
                 infoAllTimeField.setText("Время работы:" + updateTime[0].toString());
-                clashCount.setText("Ударов:"+clashnumber);
+                clashCount.setText("Ударов:" + clashnumber);
 
                 updateTime[0] += 0.5;
                 if (mainContent.moveTimer.isRunning()) {
@@ -131,14 +129,14 @@ public class Window extends JFrame {
                 }
 
             }
-            if (e.getExtendedKeyCode() == 32||e.getExtendedKeyCode() == 77){
+            if (e.getExtendedKeyCode() == 32 || e.getExtendedKeyCode() == 77) {
                 for (int i = 0; i < mainContent.moveObjects.ballArrayList.size(); i++) {
-                    mainContent.moveObjects.ballArrayList.get(i).decreaseSpeed(false,1.5);
+                    mainContent.moveObjects.ballArrayList.get(i).decreaseSpeed(false, 1.5);
                 }
             }
-            if (e.getExtendedKeyCode() == 37)mainContent.moveObjects.cue.move(-1);
-            if (e.getExtendedKeyCode() == 39)mainContent.moveObjects.cue.move(1);
-            if (e.getExtendedKeyCode() == 38)mainContent.moveObjects.cue.move(0);
+            if (e.getExtendedKeyCode() == 37) mainContent.moveObjects.cue.move(-1);
+            if (e.getExtendedKeyCode() == 39) mainContent.moveObjects.cue.move(1);
+            if (e.getExtendedKeyCode() == 38) mainContent.moveObjects.cue.move(0);
 
         }
     }
@@ -171,11 +169,11 @@ public class Window extends JFrame {
         }
     }
 
-    private class ComponentListener implements java.awt.event.ComponentListener{
+    private class ComponentListener implements java.awt.event.ComponentListener {
         @Override
         public void componentResized(ComponentEvent e) {
-            Rectangle rectangle=new Rectangle();
-            rectangle=e.getComponent().getBounds();
+            Rectangle rectangle = new Rectangle();
+            rectangle = e.getComponent().getBounds();
 
 
         }

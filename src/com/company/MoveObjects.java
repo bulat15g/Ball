@@ -22,13 +22,13 @@ public class MoveObjects {
     }
 
     //очищает шары вне столы
-    public void clearUselessObjects(){
+    public void clearUselessObjects() {
         for (int i = 0; i < ballArrayList.size(); i++) {
             boolean xBound=(ballArrayList.get(i).getxBallcenter()<field.xcoord||
                     ballArrayList.get(i).getxBallcenter()>field.xcoord+field.width+1*ballArrayList.get(i).clashRadius);
             boolean yBound=((ballArrayList.get(i).getyBallcenter()<field.ycoord)||
                     (ballArrayList.get(i).getyBallcenter()>field.height +field.ycoord +1*ballArrayList.get(i).clashRadius));
-            if(yBound||xBound){
+            if (yBound || xBound) {
                 ballArrayList.remove(i);
             }
         }
@@ -80,12 +80,12 @@ public class MoveObjects {
     }
 
     //рисовка
-    public void paintObjects(Graphics G){
+    public void paintObjects(Graphics G) {
         for (int i = 0; i < ballArrayList.size(); i++) {
             ballArrayList.get(i).Paintthis(G);
         }
         field.Paintthis(G);
-        if(cue.cueIsNesessary){
+        if (cue.cueIsNesessary) {
             cue.Paintthis(G);
         }
     }
