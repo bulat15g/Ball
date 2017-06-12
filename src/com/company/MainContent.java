@@ -33,28 +33,29 @@ public class MainContent extends JComponent {
      */
     public void setMoveObjects(){
         moveObjects.addObject(new Field(30,30,350,500));
-        Dimension fieldCenter=moveObjects.getCenter();
 
-        moveObjects.addObject(new Ball(fieldCenter.getWidth(),fieldCenter.getHeight()+60,0,-3));
+        // TODO: 5/28/17 tut kosyak
+        Dimension fieldCenter = moveObjects.getCenter();
+
+        moveObjects.addObject(new Ball(fieldCenter.getWidth(), fieldCenter.getHeight() + 60, 0, -3));
         moveObjects.getBall(0).setBallColor(Color.GREEN);
 
         for (int i = 3; i >= 1; i--) {
-            int rad=11;
-            for (int j = 0; j < 1+i*2; j++) {
-                if (j==0){
-                    moveObjects.addObject(new Ball(fieldCenter.getWidth(),fieldCenter.getHeight()-80-i*rad));
+            int rad = 11;
+            for (int j = 0; j < 1 + i * 2; j++) {
+                if (j == 0) {
+                    moveObjects.addObject(new Ball(fieldCenter.getWidth(), fieldCenter.getHeight() - 80 - i * rad));
                     continue;
                 }
                 moveObjects.addObject(new Ball(
-                        fieldCenter.getWidth()-j*rad-2*random(),
-                        fieldCenter.getHeight()-80-(3-i)*rad-j*rad));
+                        fieldCenter.getWidth() - j * rad - 2 * random(),
+                        fieldCenter.getHeight() - 80 - (3 - i) * rad - j * rad));
                 moveObjects.addObject(new Ball(
-                        fieldCenter.getWidth()+j*rad,
-                        fieldCenter.getHeight()-80-(3-i)*rad-j*rad));
+                        fieldCenter.getWidth() + j * rad,
+                        fieldCenter.getHeight() - 80 - (3 - i) * rad - j * rad));
             }
         }
-
-        moveObjects.clearUselessObjects();
+        moveObjects.cue.setBall(moveObjects.getBall(0));
     }
 
     Timer moveTimer =new Timer(ball_Frequency, new ActionListener() {
@@ -70,7 +71,7 @@ public class MainContent extends JComponent {
      */
     MainContent(){
         repaintTimer.start();
-        moveTimer.start();
+//        moveTimer.start();
         setMoveObjects();
     }
 

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class MoveObjects {
     ArrayList<Ball> ballArrayList;
     Field field;
-    Cue cue=new Cue();
+    Cue cue;
+    public Boolean shootMode=false;
 
     /**
      * constructor
@@ -17,6 +18,7 @@ public class MoveObjects {
     public MoveObjects() {
         ballArrayList=new ArrayList<>();
         field=new Field(0,0,0,0);
+        cue=new Cue();
     }
 
     //очищает шары вне столы
@@ -40,22 +42,40 @@ public class MoveObjects {
         if(object instanceof Field){
             field=(Field)object;
         }
+        if(object instanceof Cue){
+            cue=(Cue)object;
+        }
     }
 
     //действие,выполняющееся каждую минуту
     public void moveTimer(){
 
         int count=ballArrayList.size();
+        shootMode=true;
         for (int i = 0; i < count; i++) {
-            ballArrayList.get(i).Bound_Rect(field);
+            if(!ballArrayList.get(i).isSpeedZero()){
+                shootMode=false;
+                break;
+            }
         }
 
-        for (int i = 0; i < count; i++) {
-            for (int j = i+1; j < count; j++) {
-                ballArrayList.get(i).ClashWithBall(
-                        ballArrayList.get(j)
-                );
+        if(!shootMode) {
+            cue.cueIsNesessary=false;
+            for (int i = 0; i < count; i++) {
+                ballArrayList.get(i).Bound_Rect(field);
             }
+
+            for (int i = 0; i < count; i++) {
+                for (int j = i + 1; j < count; j++) {
+                    ballArrayList.get(i).ClashWithBall(
+                            ballArrayList.get(j)
+                    );
+                }
+            }
+        }
+
+        else {
+            cue.cueIsNesessary=true;
         }
     }
 
@@ -65,6 +85,9 @@ public class MoveObjects {
             ballArrayList.get(i).Paintthis(G);
         }
         field.Paintthis(G);
+        if(cue.cueIsNesessary){
+            cue.Paintthis(G);
+        }
     }
 
     //get Center

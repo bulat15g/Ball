@@ -11,9 +11,8 @@ import static java.lang.Math.*;
  * speed in 0..7;
  */
 public class Ball {
-    double maxSpeed=7;
 
-    protected double clashRadius=8;
+    protected double clashRadius=6.8;
     private double xCoord, yCoord;
     private double xSpeed, ySpeed;
     private int radius=7;
@@ -53,20 +52,13 @@ public class Ball {
      * 1
      * 2- border
      * 3- cloth
-     * @param command
      */
-    public void decreaseSpeed(int command){
-        switch (command) {
-            case 1:
-                break;
-            case 2:
-                xSpeed*=0.99;
-                break;
-            case 3:
-                ySpeed=ySpeed*0.99;
-                break;
+    public void decreaseSpeed(boolean overload,double times){
+        if (abs(xSpeed)<0.15&&abs(ySpeed)<0.15){
+            xSpeed=0.0;ySpeed=0.0;
         }
-
+        xSpeed*=times;
+        ySpeed=ySpeed*times;
     }
     public void decreaseSpeed(Double energy){
         energy*=0.7;
@@ -80,22 +72,14 @@ public class Ball {
         return yCoord+radius;
     }
 
-
     //позволяет выбрать цвет шара
     public void setBallColor(Color ballColor) {
         this.ballColor = ballColor;
     }
 
-    //взаимодействие и движение шара с разными столами- ОВАЛ
-    public boolean Bound_oval(Field field){
-        return false;
-    }
-
     //взаимодействие и движение шара с разными столами-прямоугольник
     public boolean Bound_Rect(Field field){
-        xSpeed*=0.999;
-        ySpeed*=0.999;
-
+        decreaseSpeed(false,0.998);
         boolean xBound=(getxBallcenter()<field.xcoord+clashRadius||
                 getxBallcenter()>field.xcoord+field.width-clashRadius);
         boolean yBound=((getyBallcenter()<field.ycoord+clashRadius)||
@@ -186,6 +170,16 @@ public class Ball {
         }
 
         return true;
+    }
+
+    public boolean isSpeedZero(){
+        boolean ret= (xSpeed==0.0&&ySpeed==0.0)?true:false;
+        return ret;
+    }
+
+    public void setSpeed(double X,double Y){
+        xSpeed=X;
+        ySpeed=Y;
     }
 
     //painting

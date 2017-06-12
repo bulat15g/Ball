@@ -116,7 +116,7 @@ public class Window extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-//            System.out.println(e.getExtendedKeyCode());
+            System.out.println(e.getExtendedKeyCode());
             if (e.getExtendedKeyCode() == 27)
                 System.exit(0);
             if (e.getExtendedKeyCode() == 32) {
@@ -129,6 +129,15 @@ public class Window extends JFrame {
                 }
 
             }
+            if (e.getExtendedKeyCode() == 32||e.getExtendedKeyCode() == 77){
+                for (int i = 0; i < mainContent.moveObjects.ballArrayList.size(); i++) {
+                    mainContent.moveObjects.ballArrayList.get(i).decreaseSpeed(false,1.5);
+                }
+            }
+            if (e.getExtendedKeyCode() == 37)mainContent.moveObjects.cue.move(-1);
+            if (e.getExtendedKeyCode() == 39)mainContent.moveObjects.cue.move(1);
+            if (e.getExtendedKeyCode() == 38)mainContent.moveObjects.cue.move(0);
+
         }
     }
 
