@@ -120,7 +120,7 @@ public class Ball {
             if (abs(yCoord-ball.yCoord)<radius+ball.radius+1)
         if((sqrt( ((getxBallcenter())-ball.getxBallcenter())*( (getxBallcenter())-ball.getxBallcenter())+
                 ( (getyBallcenter())-ball.getyBallcenter())*( (getyBallcenter())-ball.getyBallcenter()))
-                <=radius+ball.radius)&&(!isSpeedZero()||!ball.isSpeedZero())){
+                <=radius+ball.radius)){
             // TODO: 24.05.17 ЕСЛИ ОДИН ШАР ДВИЖЕТСЯ а другой стоит -исправить
 
 //            полные вектора скоростей + нормаль
@@ -166,7 +166,7 @@ public class Ball {
             ball.xSpeed=Yf.getX();ball.ySpeed=Yf.getY();
 
 //            Window.mainContent.moveTimer.stop();
-            Window.clashnumber++;
+            if ((!isSpeedZero()||!ball.isSpeedZero()))Window.clashnumber++;
             return false;
         }
 
