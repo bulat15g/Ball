@@ -115,11 +115,12 @@ public class Ball {
      * далее-интуиция
      */
     public boolean ClashWithBall(Ball ball){
+
         if(abs(xCoord-ball.xCoord)<radius+ball.radius+1)
             if (abs(yCoord-ball.yCoord)<radius+ball.radius+1)
-        if(sqrt( ((getxBallcenter())-ball.getxBallcenter())*( (getxBallcenter())-ball.getxBallcenter())+
+        if((sqrt( ((getxBallcenter())-ball.getxBallcenter())*( (getxBallcenter())-ball.getxBallcenter())+
                 ( (getyBallcenter())-ball.getyBallcenter())*( (getyBallcenter())-ball.getyBallcenter()))
-                <=radius+ball.radius){
+                <=radius+ball.radius)&&(!isSpeedZero()||!ball.isSpeedZero())){
             // TODO: 24.05.17 ЕСЛИ ОДИН ШАР ДВИЖЕТСЯ а другой стоит -исправить
 
 //            полные вектора скоростей + нормаль

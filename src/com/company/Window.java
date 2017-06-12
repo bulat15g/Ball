@@ -13,6 +13,7 @@ public class Window extends JFrame {
     public static Double updateTime[];
     public static long clashnumber;
 
+
     JPanel upInfoPanel;
     JPanel centerPanel;
     JTextComponent infoTextField;
@@ -33,6 +34,7 @@ public class Window extends JFrame {
         initiateGui();
         Timeinitiate();
         infoUpdateTimer.start();
+        setTitle("Бильярд под АПСИНТОМ");
 
         setVisible(true);
         setLayout(new BorderLayout());

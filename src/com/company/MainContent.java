@@ -37,7 +37,7 @@ public class MainContent extends JComponent {
         // TODO: 5/28/17 tut kosyak
         Dimension fieldCenter = moveObjects.getCenter();
 
-        moveObjects.addObject(new Ball(fieldCenter.getWidth(), fieldCenter.getHeight() + 60, 0, -3));
+        moveObjects.addObject(new Ball(fieldCenter.getWidth(), fieldCenter.getHeight() + 60, 0, 0));
         moveObjects.getBall(0).setBallColor(Color.GREEN);
 
         for (int i = 3; i >= 1; i--) {

@@ -51,14 +51,14 @@ public class Cue {
     public void move(int i){
         //против часовой стрелки
         if(i==1){
-            phi+=10;
+            phi+=2;
         }
         // по часовой стрелке
         if(i==-1){
-            phi-=10;
+            phi-=2;
         }
         if(i==0){
-            ball.setSpeed(powerShot*Math.cos(phi),-powerShot*Math.sin(phi));
+            ball.setSpeed(-powerShot*Math.cos(degToRad(phi)),powerShot*Math.sin(degToRad(phi)));
         }
 
     }
