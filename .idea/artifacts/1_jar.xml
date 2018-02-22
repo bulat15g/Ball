@@ -2,7 +2,7 @@
   <artifact type="jar" name="1:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/1_jar</output-path>
     <root id="archive" name="1.jar">
-      <element id="module-output" name="1" />
+      <element id="module-output" name="BulliardTry" />
     </root>
   </artifact>
 </component>

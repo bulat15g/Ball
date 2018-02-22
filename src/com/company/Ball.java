@@ -16,7 +16,7 @@ public class Ball {
 
     public double mass = 1;
     public Color ballColor = Color.BLACK;
-    protected double clashRadius = 6.8;
+    protected double clashRadius = 6.9;
     private double xCoord, yCoord;
     private double xSpeed, ySpeed;
     private int radius = 7;
@@ -72,7 +72,7 @@ public class Ball {
     }
 
     public void decreaseSpeed(Double energy) {
-        energy *= 0.7;
+        energy *= 0.2;
     }
 
 
@@ -91,7 +91,7 @@ public class Ball {
 
     //взаимодействие и движение шара с разными столами-прямоугольник
     public boolean Bound_Rect(Field field) {
-        decreaseSpeed(false, 0.998);
+        decreaseSpeed(false, 0.997);
         boolean xBound = (getxBallcenter() < field.xcoord + clashRadius ||
                 getxBallcenter() > field.xcoord + field.width - clashRadius);
         boolean yBound = ((getyBallcenter() < field.ycoord + clashRadius) ||
@@ -131,7 +131,23 @@ public class Ball {
      * основная идея- переход к полярным координатам и разделение скоростей на нормальную и тангенциальную
      * далее-интуиция
      */
-    public boolean ClashWithBall(Ball ball) {
+
+    public boolean ClashWithBallDeg (Ball ball) {
+        if (abs(xCoord - ball.xCoord) < radius + ball.radius + 1)
+            if (abs(yCoord - ball.yCoord) < radius + ball.radius + 1)
+                if ((sqrt(((getxBallcenter()) - ball.getxBallcenter()) * ((getxBallcenter()) - ball.getxBallcenter()) +
+                        ((getyBallcenter()) - ball.getyBallcenter()) * ((getyBallcenter()) - ball.getyBallcenter()))
+                        <= radius + ball.radius))
+                {
+                    Vector Xf= new Vector(xSpeed,ySpeed,"Xvector");
+                    Vector Yf = new Vector(ball.xSpeed, ball.ySpeed, "yVector");
+                }
+
+        return false;
+    }
+
+    //БЛЯДЬ ПЕРЕПИСАТЬ
+    public boolean clashWithBallRad(Ball ball) {
 
         if (abs(xCoord - ball.xCoord) < radius + ball.radius + 1)
             if (abs(yCoord - ball.yCoord) < radius + ball.radius + 1)
@@ -159,19 +175,22 @@ public class Ball {
                     //x=(m1 Imnpul - sqrt(m1 m2 (-Imnpul^2 + 2 m1 Energ + 2 m2 Energ)))/(m1 (m1 + m2))         !!!!!!!!!!!!!!!!!!!!!!!
                     //y=(m2 Imnpul - sqrt(m1 m2 (-Imnpul^2 + 2 m1 Energ + 2 m2 Energ)))/(m2 (m1 + m2))         !!!!!!!!!!!!!!!!!!!!!!!!!!!
                     double Energ = mass * Xr.lenght() * Xr.lenght() / 2 + ball.mass * Yr.lenght() * Yr.lenght() / 2;
-
                     decreaseSpeed(Energ);
-
+//                    double Energ=mass*Xf.lenght()*Xf.lenght()/2 + ball.mass * Yf.lenght() * Yf.lenght() / 2;
+//                    Energ=Energ-(mass*Xr.lenght()*Xr.lenght()+mass*Yr.lenght()*Yr.lenght()); //FUCKEN SHET;
                     double Impul = mass * Xr.lenght() - ball.mass * Yr.lenght();
 
-                    double x = (mass * Impul - sqrt(mass * ball.mass * (-Impul * Impul + 2 * mass * Energ + 2 * ball.mass * Energ))) / (mass * (mass + ball.mass));
+                    double x = (mass * Impul - sqrt(mass * ball.mass * (-Impul * Impul + 2 * mass * Energ +
+                            2 * ball.mass * Energ))) / (mass * (mass + ball.mass));
 
-                    double y = (-ball.mass * Impul - sqrt(mass * ball.mass * (-Impul * Impul + 2 * mass * Energ + 2 * ball.mass * Energ))) / (ball.mass * (mass + ball.mass));
-
+                    double y = (-ball.mass * Impul - sqrt(mass * ball.mass * (-Impul * Impul + 2 * mass * Energ
+                            + 2 * ball.mass * Energ))) / (ball.mass * (mass + ball.mass));
 
                     if (Xf.scalar(L) + Yf.scalar(L) != x + y) {
-                        y = (+ball.mass * Impul - sqrt(mass * ball.mass * (-Impul * Impul + 2 * mass * Energ + 2 * ball.mass * Energ))) / (ball.mass * (mass + ball.mass));
-                        x = (-mass * Impul + sqrt(mass * ball.mass * (-Impul * Impul + 2 * mass * Energ + 2 * ball.mass * Energ))) / (mass * (mass + ball.mass));
+                        y = (+ball.mass * Impul - sqrt(mass * ball.mass * (-Impul * Impul + 2 * mass * Energ
+                                + 2 * ball.mass * Energ))) / (ball.mass * (mass + ball.mass));
+                        x = (-mass * Impul + sqrt(mass * ball.mass * (-Impul * Impul + 2 * mass * Energ + 2
+                                * ball.mass * Energ))) / (mass * (mass + ball.mass));
                     }
 
 
@@ -185,11 +204,13 @@ public class Ball {
                     ball.xSpeed = Yf.getX();
                     ball.ySpeed = Yf.getY();
 
-//            Window.mainContent.moveTimer.stop();
-                    if ((!isSpeedZero() || !ball.isSpeedZero())) Window.clashnumber++;
+                    if ((!isSpeedZero() || !ball.isSpeedZero())) {
+                        Window.clashnumber++;
+//                        Window.mainContent.moveTimer.stop();
+                    }
+
                     return false;
                 }
-
         return true;
     }
 

@@ -10,7 +10,6 @@ import java.awt.event.*;
  */
 public class Window extends JFrame {
     public static int BoundX = 500, BoundY = 600;
-
     public static Double updateTime[];
     public static long clashnumber;
     static JTextComponent infoRunTimeField;
@@ -21,7 +20,6 @@ public class Window extends JFrame {
     JPanel upInfoPanel;
     JPanel centerPanel;
     JTextComponent infoTextField;
-
 
     /**
      * init GIU()
@@ -136,8 +134,9 @@ public class Window extends JFrame {
             }
             if (e.getExtendedKeyCode() == 37) mainContent.moveObjects.cue.move(-1);
             if (e.getExtendedKeyCode() == 39) mainContent.moveObjects.cue.move(1);
-            if (e.getExtendedKeyCode() == 38) mainContent.moveObjects.cue.move(0);
-
+            if ((e.getExtendedKeyCode() == 38)
+                    &&(mainContent.moveObjects.cue.cueIsNesessary)) mainContent.moveObjects.cue.move(0);
+            if(e.getKeyCode()==113)mainContent.setMoveObjects();
         }
     }
 

@@ -25,9 +25,9 @@ public class MoveObjects {
     public void clearUselessObjects() {
         for (int i = 0; i < ballArrayList.size(); i++) {
             boolean xBound=(ballArrayList.get(i).getxBallcenter()<field.xcoord||
-                    ballArrayList.get(i).getxBallcenter()>field.xcoord+field.width+1*ballArrayList.get(i).clashRadius);
+                    ballArrayList.get(i).getxBallcenter()>field.xcoord+field.width+ballArrayList.get(i).clashRadius);
             boolean yBound=((ballArrayList.get(i).getyBallcenter()<field.ycoord)||
-                    (ballArrayList.get(i).getyBallcenter()>field.height +field.ycoord +1*ballArrayList.get(i).clashRadius));
+                    (ballArrayList.get(i).getyBallcenter()>field.height +field.ycoord +ballArrayList.get(i).clashRadius));
             if (yBound || xBound) {
                 ballArrayList.remove(i);
             }
@@ -67,7 +67,7 @@ public class MoveObjects {
 
             for (int i = 0; i < count; i++) {
                 for (int j = i + 1; j < count; j++) {
-                    ballArrayList.get(i).ClashWithBall(
+                    ballArrayList.get(i).clashWithBallRad(
                             ballArrayList.get(j)
                     );
                 }

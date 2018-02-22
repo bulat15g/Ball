@@ -18,6 +18,7 @@ public class MainContent extends JComponent {
     public static int ball_Frequency=10;
     public MoveObjects moveObjects = new MoveObjects();
 
+
     //repaint timer every 10 MS
     Timer repaintTimer =new Timer(10, new ActionListener() {
         @Override
@@ -26,10 +27,19 @@ public class MainContent extends JComponent {
         }
     });
 
+    Timer moveTimer =new Timer(ball_Frequency, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            moveObjects.moveTimer();
+        }
+    });
+
     /**
      * setMoveObjects
      */
     public void setMoveObjects(){
+        if(moveObjects==null)moveObjects=new MoveObjects();
+
         moveObjects.addObject(new Field(30,30,350,500));
 
         // TODO: 5/28/17 tut kosyak
@@ -37,8 +47,9 @@ public class MainContent extends JComponent {
 
         moveObjects.addObject(new Ball(fieldCenter.getWidth(), fieldCenter.getHeight() + 60, 0, 0));
         moveObjects.getBall(0).setBallColor(Color.GREEN);
+        moveObjects.cue.setBall(moveObjects.getBall(0));
 
-        for (int i = 3; i >= 1; i--) {
+        for (int i = 5; i >= 1; i--) {
             int rad = 11;
             for (int j = 0; j < 1 + i * 2; j++) {
                 if (j == 0) {
@@ -53,15 +64,8 @@ public class MainContent extends JComponent {
                         fieldCenter.getHeight() - 80 - (3 - i) * rad - j * rad));
             }
         }
-        moveObjects.cue.setBall(moveObjects.getBall(0));
-    }
 
-    Timer moveTimer =new Timer(ball_Frequency, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            moveObjects.moveTimer();
-        }
-    });
+    }
 
     /**
      * initiate repaint&move
